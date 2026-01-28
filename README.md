@@ -1,4 +1,4 @@
-# TeleBlob 🚀
+# TeleBlob 
 
 > **Experimental Object Storage using Telegram Bot API**
 
@@ -316,7 +316,7 @@ TeleBlob includes a minimal web gallery (`gallery.html`) used to validate inline
 
 ---
 
-## 🤔 Why This Approach?
+## Why This Approach?
 
 **Pros:**
 - ✅ Free storage (within Telegram's limits)
@@ -347,7 +347,7 @@ This project is licensed under the **Apache License 2.0** - see the [LICENSE](LI
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Telegram for providing the Bot API
 - Firebase for Firestore database
@@ -362,5 +362,6 @@ For questions or suggestions, please open an issue on GitHub.
 ---
 
 **Remember:** This is an experimental project for educational purposes. Always respect Telegram's Terms of Service and use responsibly.
+
 
 
