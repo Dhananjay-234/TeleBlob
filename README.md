@@ -152,69 +152,6 @@ First request fetches from Telegram; subsequent requests are served from cache (
 
 ---
 
-### 3. Fetch Media
-```http
-GET /api/media/:id
-```
-
-**Example:**
-```bash
-curl http://localhost:3000/api/media/a1b2c3d4-e5f6-7890-abcd-ef1234567890 \
-  --output downloaded_image.jpg
-```
-
-**Response:**
-- Returns the actual file with appropriate `Content-Type` header
-- First request: Downloads from Telegram and caches
-- Subsequent requests (within TTL): Serves from cache
-
----
-
-### 4. Get Media Info
-```http
-GET /api/media/:id/info
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "data": {
-    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-    "file_type": "image/jpeg",
-    "original_name": "image.jpg",
-    "size": 245678,
-    "created_at": "2026-01-28T10:00:00.000Z"
-  }
-}
-```
-
----
-
-### 5. List All Media
-```http
-GET /api/media?limit=100
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "count": 2,
-  "data": [
-    {
-      "id": "a1b2c3d4-...",
-      "file_type": "image/jpeg",
-      "original_name": "image.jpg",
-      "size": 245678,
-      "created_at": "2026-01-28T10:00:00.000Z"
-    },
-    ...
-  ]
-}
-```
-
----
 
 ## 🔒 Security Considerations
 
@@ -362,6 +299,7 @@ For questions or suggestions, please open an issue on GitHub.
 ---
 
 **Remember:** This is an experimental project for educational purposes. Always respect Telegram's Terms of Service and use responsibly.
+
 
 
 
