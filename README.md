@@ -52,13 +52,13 @@ Traditional object storage systems (like AWS S3, Google Cloud Storage) require p
 │          TeleBlob Backend (Node.js)         │
 │  ┌────────────────────────────────────────┐ │
 │  │  Controllers (Upload/Fetch)            │ │
-│  └────────┬───────────────────────┬────────┘ │
-│           │                       │          │
+│  └────────┬──────────────────────┬────────┘ │
+│           │                      │          │
 │  ┌────────▼────────┐    ┌────────▼────────┐ │
 │  │ Telegram Service│    │  Cache Service  │ │
 │  │  (Upload/Download)   │  (Disk + TTL)   │ │
 │  └────────┬────────┘    └─────────────────┘ │
-│           │                                  │
+│           │                                 │
 │  ┌────────▼────────┐                        │
 │  │ Media Repository│                        │
 │  │   (Firestore)   │                        │
@@ -362,3 +362,4 @@ For questions or suggestions, please open an issue on GitHub.
 ---
 
 **Remember:** This is an experimental project for educational purposes. Always respect Telegram's Terms of Service and use responsibly.
+
