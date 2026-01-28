@@ -129,8 +129,8 @@ Content-Type: multipart/form-data
 
 Input:
 - file (required): Image or video file
-
-Output:
+  
+```Output:
 {
   "success": true,
   "data": {
@@ -139,7 +139,7 @@ Output:
     "size": 245678
   }
 }
-
+```
 ---
 
 ### Fetch Media
@@ -148,7 +148,7 @@ GET /api/media/:id
 Returns the requested file.  
 First request fetches from Telegram; subsequent requests are served from cache (within TTL).
 
-```
+
 
 ---
 
@@ -362,4 +362,5 @@ For questions or suggestions, please open an issue on GitHub.
 ---
 
 **Remember:** This is an experimental project for educational purposes. Always respect Telegram's Terms of Service and use responsibly.
+
 
