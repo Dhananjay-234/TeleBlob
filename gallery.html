@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeleBlob Gallery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #fafafa;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-bottom: 1px solid #dbdbdb;
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-content {
+            max-width: 935px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .upload-btn {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .upload-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Upload Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close-modal:hover {
+            color: #333;
+        }
+
+        .upload-area {
+            border: 3px dashed #dbdbdb;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upload-area:hover {
+            border-color: #bc1888;
+            background: #fafafa;
+        }
+
+        .upload-area.dragover {
+            border-color: #bc1888;
+            background: #f0f0f0;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        /* Gallery Grid */
+        .container {
+            max-width: 935px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 28px;
+            margin-top: 20px;
+        }
+
+        /* Media Card */
+        .media-card {
+            background: white;
+            border: 1px solid #dbdbdb;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .media-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .media-container {
+            width: 100%;
+            height: 300px;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .media-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .media-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .loading {
+            color: white;
+            font-size: 14px;
+        }
+
+        .media-info {
+            padding: 15px;
+        }
+
+        .media-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #262626;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .media-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #8e8e8e;
+        }
+
+        .media-size {
+            font-weight: 500;
+        }
+
+        .media-date {
+            font-style: italic;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: #8e8e8e;
+        }
+
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #262626;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #bc1888;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 40px auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Video Play Button Overlay */
+        .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            pointer-events: none;
+        }
+
+        .play-overlay::after {
+            content: '▶';
+            font-size: 24px;
+            color: #bc1888;
+            margin-left: 4px;
+        }
+
+        .media-container video:not([controls])+.play-overlay {
+            pointer-events: auto;
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #dbdbdb;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #262626;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #8e8e8e;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">📸 TeleBlob</div>
+            <button class="upload-btn" onclick="openUploadModal()">+ Upload Media</button>
+        </div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div class="modal" id="uploadModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeUploadModal()">&times;</span>
+            <h2 style="margin-bottom: 20px;">Upload Media</h2>
+
+            <div class="upload-area" id="uploadArea">
+                <div style="font-size: 48px; margin-bottom: 10px;">📁</div>
+                <p><strong>Click to select</strong> or drag and drop</p>
+                <p style="color: #999; font-size: 12px; margin-top: 5px;">Images and Videos (max 50MB)</p>
+                <input type="file" id="fileInput" accept="image/*,video/*">
+            </div>
+
+            <div id="uploadStatus" style="margin-top: 15px; text-align: center;"></div>
+
+            <button class="upload-btn" id="uploadBtn" style="width: 100%; padding: 12px;" disabled>Upload</button>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value" id="totalCount">0</div>
+                <div class="stat-label">Total Media</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="imageCount">0</div>
+                <div class="stat-label">Images</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="videoCount">0</div>
+                <div class="stat-label">Videos</div>
+            </div>
+        </div>
+
+        <!-- Gallery -->
+        <div id="gallery" class="gallery"></div>
+
+        <!-- Loading -->
+        <div id="loading" class="spinner" style="display: none;"></div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <div class="empty-state-icon">📷</div>
+            <h2>No media yet</h2>
+            <p>Upload your first image or video to get started!</p>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3000/api';
+        let selectedFile = null;
+
+        // Load gallery on page load
+        window.addEventListener('load', loadGallery);
+
+        // Upload Modal
+        function openUploadModal() {
+            document.getElementById('uploadModal').classList.add('active');
+        }
+
+        function closeUploadModal() {
+            document.getElementById('uploadModal').classList.remove('active');
+            selectedFile = null;
+            document.getElementById('uploadBtn').disabled = true;
+            document.getElementById('uploadStatus').innerHTML = '';
+        }
+
+        // File Upload
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const uploadBtn = document.getElementById('uploadBtn');
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            if (e.dataTransfer.files.length > 0) {
+                handleFileSelect(e.dataTransfer.files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files[0]);
+            }
+        });
+
+        function handleFileSelect(file) {
+            selectedFile = file;
+            document.getElementById('uploadStatus').innerHTML =
+                `<strong>Selected:</strong> ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+            uploadBtn.disabled = false;
+        }
+
+        uploadBtn.addEventListener('click', async () => {
+            if (!selectedFile) return;
+
+            uploadBtn.disabled = true;
+            uploadBtn.textContent = 'Uploading...';
+
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+
+            try {
+                const response = await fetch(`${API_BASE}/upload`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    document.getElementById('uploadStatus').innerHTML =
+                        `<span style="color: #4CAF50;">✅ Upload successful!</span>`;
+
+                    setTimeout(() => {
+                        closeUploadModal();
+                        loadGallery();
+                    }, 1000);
+                } else {
+                    throw new Error(data.error || 'Upload failed');
+                }
+            } catch (error) {
+                document.getElementById('uploadStatus').innerHTML =
+                    `<span style="color: #f44336;">❌ ${error.message}</span>`;
+                uploadBtn.disabled = false;
+                uploadBtn.textContent = 'Upload';
+            }
+        });
+
+        // Load Gallery
+        async function loadGallery() {
+            const gallery = document.getElementById('gallery');
+            const loading = document.getElementById('loading');
+            const emptyState = document.getElementById('emptyState');
+
+            loading.style.display = 'block';
+            gallery.innerHTML = '';
+            emptyState.style.display = 'none';
+
+            try {
+                const response = await fetch(`${API_BASE}/media`);
+                const data = await response.json();
+
+                loading.style.display = 'none';
+
+                if (!data.success || data.count === 0) {
+                    emptyState.style.display = 'block';
+                    updateStats(0, 0, 0);
+                    return;
+                }
+
+                const media = data.data;
+                let imageCount = 0;
+                let videoCount = 0;
+
+                media.forEach(item => {
+                    const card = createMediaCard(item);
+                    gallery.appendChild(card);
+
+                    if (item.file_type.startsWith('image/')) imageCount++;
+                    if (item.file_type.startsWith('video/')) videoCount++;
+                });
+
+                updateStats(media.length, imageCount, videoCount);
+
+            } catch (error) {
+                loading.style.display = 'none';
+                gallery.innerHTML = `<p style="color: red;">Error loading gallery: ${error.message}</p>`;
+            }
+        }
+
+        // Create Media Card
+        function createMediaCard(item) {
+            const card = document.createElement('div');
+            card.className = 'media-card';
+
+            const isVideo = item.file_type.startsWith('video/');
+            const mediaUrl = `${API_BASE}/media/${item.id}`;
+            const date = new Date(item.created_at._seconds * 1000).toLocaleDateString();
+
+            card.innerHTML = `
+                <div class="media-container">
+                    ${isVideo ?
+                    `<video src="${mediaUrl}" preload="metadata"></video>
+                         <div class="play-overlay" onclick="playVideo(this)"></div>` :
+                    `<img src="${mediaUrl}" alt="${item.original_name}" loading="lazy">`
+                }
+                </div>
+                <div class="media-info">
+                    <div class="media-name">${item.original_name}</div>
+                    <div class="media-meta">
+                        <span class="media-size">${(item.size / 1024 / 1024).toFixed(2)} MB</span>
+                        <span class="media-date">${date}</span>
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Play Video
+        function playVideo(overlay) {
+            const video = overlay.previousElementSibling;
+            video.controls = true;
+            video.play();
+            overlay.style.display = 'none';
+        }
+
+        // Update Stats
+        function updateStats(total, images, videos) {
+            document.getElementById('totalCount').textContent = total;
+            document.getElementById('imageCount').textContent = images;
+            document.getElementById('videoCount').textContent = videos;
+        }
+    </script>
+</body>
+
+</html>
