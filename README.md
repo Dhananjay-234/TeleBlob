@@ -129,8 +129,8 @@ Content-Type: multipart/form-data
 
 Input:
 - file (required): Image or video file
-  
-```Output:
+
+Output:
 {
   "success": true,
   "data": {
@@ -139,15 +139,29 @@ Input:
     "size": 245678
   }
 }
-```
+
 ---
 
 ### Fetch Media
 GET /api/media/:id  
 
 Returns the requested file.  
-First request fetches from Telegram; subsequent requests are served from cache (within TTL).
+- First request: fetched from Telegram and cached  
+- Subsequent requests (within TTL): served from cache
 
+---
+
+### Media Info
+GET /api/media/:id/info  
+
+Returns metadata for the given media ID.
+
+---
+
+### List Media
+GET /api/media?limit=100  
+
+Returns a list of stored media metadata.
 
 
 ---
@@ -163,31 +177,69 @@ First request fetches from Telegram; subsequent requests are served from cache (
 
 ---
 
-## 🧪 Testing
+## 🧪 Testing 
 
-### Upload a test image:
-```bash
-curl -X POST http://localhost:3000/api/upload \
-  -F "file=@test-image.jpg"
-```
+### Uploading a Test Image
 
-### Fetch the uploaded image:
-```bash
-# Use the media_id from upload response
-curl http://localhost:3000/api/media/<media_id> --output result.jpg
-```
+To test the system, upload any image or video using:
 
-### Check cache behavior:
-1. First fetch: Check logs for "📥 Downloading from Telegram"
-2. Second fetch (within 1 hour): Check logs for "📦 Cache HIT"
+* The web gallery interface, or
+* Any client connected to the backend
 
-### Use the Gallery Interface:
-Open `gallery.html` in your browser for a a simple grid-based media gallery interface:
-- **View all media** in a responsive grid layout
-- **Upload new media** via the "+ Upload Media" button
-- **Images display inline** automatically
-- **Videos play inline** with custom controls
-- **Statistics dashboard** shows total media count
+Once uploaded:
+
+* The backend sends the file to Telegram
+* A unique media ID is generated and stored
+* The file becomes available for retrieval
+
+---
+
+### Fetching the Uploaded Media
+
+After uploading, you can view or download the media using its generated media ID.
+
+* The backend retrieves the file reference
+* If the file is already cached, it is served immediately
+* If not cached, it is fetched from Telegram and then served
+
+---
+
+### Verifying Cache Behavior
+
+To confirm that caching works correctly:
+
+1. On the **first access**, the backend downloads the file from Telegram
+2. On **subsequent accesses (within the cache duration)**, the file is served directly from cache
+
+This reduces repeated Telegram API calls and improves performance.
+
+---
+
+### Using the Web Gallery Interface
+
+TeleBlob includes a simple web gallery (`gallery.html`) to verify inline media fetching.
+
+Using the gallery, you can:
+
+* View all uploaded media in a grid layout
+* Upload new images or videos
+* See images displayed inline automatically
+* Play videos directly in the browser
+* View basic statistics such as total media count
+
+**Note:** The backend server must be running before opening the gallery.
+
+---
+
+### Purpose of This Testing Section
+
+This section focuses on **functional validation**, not command-line testing.
+It ensures that:
+
+* Uploads work correctly
+* Media retrieval functions as expected
+* Caching behavior is effective
+* Inline rendering works through the backend
 
 ---
 
@@ -299,6 +351,7 @@ For questions or suggestions, please open an issue on GitHub.
 ---
 
 **Remember:** This is an experimental project for educational purposes. Always respect Telegram's Terms of Service and use responsibly.
+
 
 
 
