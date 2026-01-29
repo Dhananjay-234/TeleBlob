@@ -93,6 +93,8 @@ TeleBlob/
 ├── app.js                     # Express server entry point
 ├── .env.example               # Environment variables template
 ├── .gitignore
+├── test.html                  # Web Interface to test the file retrieval
+├── gallery.html               # Web Gallery Interface to fetch media inline
 ├── package.json
 ├── LICENSE                    # Apache 2.0
 └── README.md
@@ -339,6 +341,7 @@ For questions or suggestions, please open an issue on GitHub.
 ---
 
 **Remember:** This is an experimental project for educational purposes. Always respect Telegram's Terms of Service and use responsibly.
+
 
 
 
