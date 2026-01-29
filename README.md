@@ -320,7 +320,9 @@ It ensures that:
 
 ## 📝 License
 
-This project is licensed under the **Apache License 2.0** - see the [LICENSE](LICENSE) file for details.
+This project is released into the public domain under **The Unlicense**.  
+See the [LICENSE](LICENSE) file for details.
+
 
 **Author:** Dhananjay Shinde
 
@@ -341,6 +343,7 @@ For questions or suggestions, please open an issue on GitHub.
 ---
 
 **Remember:** This is an experimental project for educational purposes. Always respect Telegram's Terms of Service and use responsibly.
+
 
 
 
