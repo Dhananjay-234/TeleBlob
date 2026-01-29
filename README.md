@@ -131,7 +131,7 @@ Content-Type: multipart/form-data
 Input:
 - file (required): Image or video file
 
-Output:
+```Output:
 {
   "success": true,
   "data": {
@@ -140,7 +140,7 @@ Output:
     "size": 245678
   }
 }
-
+```
 ---
 
 ### Fetch Media
@@ -343,6 +343,7 @@ For questions or suggestions, please open an issue on GitHub.
 ---
 
 **Remember:** This is an experimental project for educational purposes. Always respect Telegram's Terms of Service and use responsibly.
+
 
 
 
