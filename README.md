@@ -4,7 +4,6 @@
 
 TeleBlob is an innovative backend system that uses Telegram's Bot API as an experimental object storage layer for images and videos. Instead of relying on traditional cloud storage services, TeleBlob leverages Telegram's infrastructure to store and retrieve media files.
 
-**Original Author:** Dhananjay Shinde
 
 ---
 
@@ -215,9 +214,9 @@ This reduces repeated Telegram API calls and improves performance.
 
 ---
 
-### Using the Web Gallery Interface
+### Using the Web Interfaces
 
-TeleBlob includes a simple web gallery (`gallery.html`) to verify inline media fetching.
+TeleBlob includes a simple web gallery (`gallery.html`) to verify inline media fetching, and a minimal Frontend interface (`test.html`) to test media retrieval using a media ID.
 
 Using the gallery, you can:
 
@@ -226,6 +225,17 @@ Using the gallery, you can:
 * See images displayed inline automatically
 * Play videos directly in the browser
 * View basic statistics such as total media count
+
+How the Test Interface Works
+
+1. When an image or video is uploaded, the backend sends the file to a private Telegram channel using the Bot API.
+2. Telegram stores the file and returns a unique identifier.
+3. The backend saves this identifier and generates a **media ID**.
+4. The test interface (`test.html`) displays this media ID after upload.
+5. The same media ID can then be used in the test interface to fetch the media again.
+6. The backend retrieves the file from Telegram and displays it inline in the browser.
+
+This verifies that media can be reliably stored and retrieved using only its ID, without exposing Telegram details.
 
 **Note:** The backend server must be running before opening the gallery.
 
@@ -243,28 +253,6 @@ It ensures that:
 
 ---
 
-## 🎨 Gallery Interface
-
-TeleBlob includes a minimal web gallery (`gallery.html`) used to validate inline image and video fetching via the backend API.
-
-### Features
-- **📸 Grid Layout**: Responsive gallery similar to Instagram
-- **🖼️ Inline Display**: Images and videos load directly from Telegram
-- **📊 Statistics**: Real-time count of total media, images, and videos
-- **➕ Upload Modal**: Drag-and-drop or click to upload
-- **⚡ Smart Loading**: Lazy loading for optimal performance
-- **🎬 Video Playback**: Click to play videos with controls
-
-### Usage
-1. Open `gallery.html` in your browser
-2. Click "+ Upload Media" to add new content
-3. View all your media in the grid
-4. Click on videos to play them inline
-5. All media is fetched from Telegram in the background
-
-**Note**: Make sure the server is running (`npm start`) before opening the gallery.
-
----
 
 ## 🛠️ Configuration
 
@@ -332,7 +320,7 @@ TeleBlob includes a minimal web gallery (`gallery.html`) used to validate inline
 
 This project is licensed under the **Apache License 2.0** - see the [LICENSE](LICENSE) file for details.
 
-**Original Author:** Dhananjay Shinde
+**Author:** Dhananjay Shinde
 
 ---
 
@@ -351,6 +339,7 @@ For questions or suggestions, please open an issue on GitHub.
 ---
 
 **Remember:** This is an experimental project for educational purposes. Always respect Telegram's Terms of Service and use responsibly.
+
 
 
 
