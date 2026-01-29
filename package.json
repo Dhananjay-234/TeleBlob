@@ -1,0 +1,30 @@
+{
+  "name": "teleblob",
+  "version": "1.0.0",
+  "description": "Experimental backend system using Telegram Bot as object storage for images and videos",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "telegram",
+    "object-storage",
+    "backend",
+    "api",
+    "firebase"
+  ],
+  "author": "Dhananjay Shinde",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "axios": "^1.13.4",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "firebase-admin": "^13.6.0",
+    "form-data": "^4.0.5",
+    "fs-extra": "^11.3.3",
+    "multer": "^2.0.2",
+    "uuid": "^13.0.0"
+  }
+}
