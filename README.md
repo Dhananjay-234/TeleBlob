@@ -13,7 +13,7 @@ This project is **educational and experimental only**. It demonstrates a creativ
 
 ---
 
-## 🧠 Core Concept
+## Core Concept
 
 Traditional object storage systems (like AWS S3, Google Cloud Storage) require paid services and complex configurations. TeleBlob explores an alternative approach:
 
