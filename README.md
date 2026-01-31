@@ -25,7 +25,7 @@ Traditional object storage systems (like AWS S3, Google Cloud Storage) require p
 
 ---
 
-## ✨ Features
+##  Features
 
 - ✅ **REST API** for media upload and retrieval
 - ✅ **Automatic Telegram Upload** via Bot API
@@ -37,7 +37,7 @@ Traditional object storage systems (like AWS S3, Google Cloud Storage) require p
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
 
 ```
 ┌─────────────┐
@@ -102,7 +102,7 @@ TeleBlob/
 
 ---
 
-## 🚀 Quick Setup 
+##  Quick Setup 
 
 ### Requirements
 - Node.js v16+
@@ -116,7 +116,7 @@ TeleBlob/
 4. Start the server
 
 ---
-## 📡 API Overview
+##  API Overview
 
 ### Health Check
 GET /health  
@@ -168,7 +168,7 @@ Returns a list of stored media metadata.
 ---
 
 
-## 🔒 Security Considerations
+##  Security Considerations
 
 - ✅ **Bot Token Protection**: Never expose `TELEGRAM_BOT_TOKEN` in client-side code
 - ✅ **File ID Abstraction**: Telegram `file_id` is never returned to clients
@@ -178,7 +178,7 @@ Returns a list of stored media metadata.
 
 ---
 
-## 🧪 Testing 
+## Testing 
 
 ### Uploading a Test Image
 
@@ -256,7 +256,7 @@ It ensures that:
 ---
 
 
-## 🛠️ Configuration
+## Configuration
 
 | Variable | Description | Default |
 |----------|-------------|---------|
@@ -268,7 +268,7 @@ It ensures that:
 
 ---
 
-## 📊 How It Works
+## How It Works
 
 ### Upload Process
 1. Client sends file via `POST /api/upload`
