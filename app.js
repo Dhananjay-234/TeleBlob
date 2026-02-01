@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const { initializeFirebase } = require('./src/config/firebase');
 const { config, validateConfig } = require('./src/config/env');
 const apiRoutes = require('./src/routes/api');
@@ -38,6 +39,13 @@ app.get('/health', (req, res) => {
         service: 'TeleBlob',
         timestamp: new Date().toISOString()
     });
+});
+// Serve gallery as home page
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'gallery.html'));
+});
+app.get('/test', (req, res) => {
+    res.sendFile(path.join(__dirname, 'test.html'));
 });
 
 // API routes
