@@ -16,7 +16,7 @@
     "firebase"
   ],
   "author": "Dhananjay Shinde",
-  "license": "Apache-2.0",
+  "license": "No-License",
   "dependencies": {
     "axios": "^1.13.4",
     "dotenv": "^17.2.3",
