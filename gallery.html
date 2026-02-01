@@ -369,7 +369,7 @@
     </div>
 
     <script>
-        const API_BASE = 'http://localhost:3000/api';
+        const API_BASE = window.location.origin;
         let selectedFile = null;
 
         // Load gallery on page load
@@ -434,7 +434,7 @@
             formData.append('file', selectedFile);
 
             try {
-                const response = await fetch(`${API_BASE}/upload`, {
+                const response = await fetch(`${API_BASE}/api/upload`, {
                     method: 'POST',
                     body: formData
                 });
@@ -471,7 +471,7 @@
             emptyState.style.display = 'none';
 
             try {
-                const response = await fetch(`${API_BASE}/media`);
+                const response = await fetch(`${API_BASE}/api/media`);
                 const data = await response.json();
 
                 loading.style.display = 'none';
@@ -508,7 +508,7 @@
             card.className = 'media-card';
 
             const isVideo = item.file_type.startsWith('video/');
-            const mediaUrl = `${API_BASE}/media/${item.id}`;
+            const mediaUrl = `${API_BASE}/api/media/${item.id}`;
             const date = new Date(item.created_at._seconds * 1000).toLocaleDateString();
 
             card.innerHTML = `
