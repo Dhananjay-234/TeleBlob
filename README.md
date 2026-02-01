@@ -4,6 +4,36 @@
 
 TeleBlob is an innovative backend system that uses Telegram's Bot API as an experimental object storage layer for images and videos. Instead of relying on traditional cloud storage services, TeleBlob leverages Telegram's infrastructure to store and retrieve media files.
 
+## 🌐 Live Demo & Storage Transparency
+
+### Live Deployment (Render)
+TeleBlob is deployed online and accessible at:
+
+https://teleblob.onrender.com
+
+Opening this link loads the gallery interface by default, allowing users to:
+- View uploaded images and videos
+- Upload new media through the backend
+- Verify inline media fetching and caching behavior
+
+> Note: The deployment uses a free hosting tier, so the first request may take a few seconds if the server is inactive.
+
+---
+
+### Live Telegram Storage Channel
+For transparency and demonstration purposes, the Telegram channel used as the storage backend is publicly viewable:
+
+https://t.me/+4va_zJd4KW0yOWFl
+
+This channel shows:
+- All media uploaded via TeleBlob
+- Telegram acting as the underlying storage layer
+- How files are stored independently of metadata and APIs
+
+> Important:
+> - The channel is read-only for viewers
+> - Users cannot upload directly to the channel
+> - This setup is experimental and for educational purposes only
 
 ---
 
@@ -343,6 +373,7 @@ For questions or suggestions, please open an issue on GitHub.
 ---
 
 **Remember:** This is an experimental project for educational purposes. Always respect Telegram's Terms of Service and use responsibly.
+
 
 
 
